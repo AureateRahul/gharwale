@@ -1,9 +1,12 @@
 // The only bridge between the app's pages and the app. Pages can use just these channels.
 const { contextBridge, ipcRenderer } = require("electron");
 
-const LISTEN = ["show", "secondary", "react", "hide"];
+const LISTEN = ["show", "secondary", "react", "hide", "calendar:changed"];
 const SEND = ["overlay:button", "overlay:interactive", "overlay:shape"];
-const INVOKE = ["state:get", "prefs:set", "license:activate", "license:deactivate", "onboarding:finish"];
+const INVOKE = [
+  "state:get", "prefs:set", "license:activate", "license:deactivate", "onboarding:finish",
+  "calendar:connect", "calendar:disconnect",
+];
 
 contextBridge.exposeInMainWorld("gw", {
   on: (channel, fn) => {

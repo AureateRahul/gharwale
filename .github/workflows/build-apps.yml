@@ -29,6 +29,12 @@ jobs:
           cache: npm
           cache-dependency-path: GharwaleWindows/package-lock.json
       - run: npm ci
+      - name: Add Google sign-in keys
+        shell: bash
+        env:
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+        run: node -e "require('fs').writeFileSync('src/google-config.json', JSON.stringify({clientId: process.env.GOOGLE_CLIENT_ID || '', clientSecret: process.env.GOOGLE_CLIENT_SECRET || ''}))"
       - run: npm run sync && npx electron-builder --linux AppImage deb --x64 --publish never
       - uses: actions/upload-artifact@v4
         with:
@@ -50,6 +56,12 @@ jobs:
           cache: npm
           cache-dependency-path: GharwaleWindows/package-lock.json
       - run: npm ci
+      - name: Add Google sign-in keys
+        shell: bash
+        env:
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+        run: node -e "require('fs').writeFileSync('src/google-config.json', JSON.stringify({clientId: process.env.GOOGLE_CLIENT_ID || '', clientSecret: process.env.GOOGLE_CLIENT_SECRET || ''}))"
       - run: npm run sync && npx electron-builder --win nsis --x64 --publish never
       - uses: actions/upload-artifact@v4
         with:

@@ -37,7 +37,7 @@ const DEFAULTS = {
   dinner: { hour: 20, minute: 30, owner: "maa" },
   water: { intervalMinutes: 60, owner: "maa" },
   move: { intervalMinutes: 90, owner: "papa" },
-  // No calendar on Windows yet, so meeting heads-ups are off (still in "Try a reminder").
+  // Off until Google Calendar is connected (then switched on). "Try a reminder" always works.
   meeting: { intervalMinutes: 5, owner: "maa", enabled: false },
   bedtime: { hour: 23, minute: 0, owner: "papa" },
 };
@@ -346,8 +346,8 @@ const ANSWER_TIMEOUT = 25; // seconds before an unanswered bubble counts as igno
 const dayKey = (d) => `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
 
 class Coordinator {
-  constructor({ store, content, art, scheduler, overlay, license, idleSeconds, openLink, onStateChange }) {
-    Object.assign(this, { store, content, art, scheduler, overlay, license, idleSeconds, openLink });
+  constructor({ store, content, art, scheduler, overlay, license, idleSeconds, openLink, onStateChange, calendar = null }) {
+    Object.assign(this, { store, content, art, scheduler, overlay, license, idleSeconds, openLink, calendar });
     this.onStateChange = onStateChange || (() => {});
     this.pausedUntil = null;
     this.active = null;
@@ -394,6 +394,18 @@ class Coordinator {
       this.pausedUntil = null;
       this.onStateChange();
     }
+
+    // Meetings first: they can't wait.
+    const meetingCfg = this.store.config("meeting");
+    if (this.calendar && meetingCfg.enabled) {
+      const meeting = this.calendar.nextMeeting(now, meetingCfg.intervalMinutes);
+      if (meeting && this.canShowMeeting()) {
+        this.calendar.markAnnounced(meeting);
+        this.present("meeting", 0, now, false, meeting);
+        return;
+      }
+    }
+
     for (const due of this.scheduler.dueReminders(now, this.store.prefs)) {
       if (this.canShow(due.kind, now)) {
         this.present(due.kind, due.level, now, false);
@@ -410,6 +422,11 @@ class Coordinator {
     }
     if (this.idleSeconds() > IDLE_THRESHOLD) return false;
     return true;
+  }
+
+  /** Meeting heads-ups skip quiet hours and the daily limit, but not if you're away. */
+  canShowMeeting() {
+    return this.idleSeconds() <= IDLE_THRESHOLD;
   }
 
   // ----- Presenting -----

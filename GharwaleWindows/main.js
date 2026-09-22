@@ -1,9 +1,10 @@
 // Gharwale for Windows — app entry: tray icon, overlay window, settings and onboarding.
-const { app, BrowserWindow, Tray, Menu, ipcMain, nativeImage, powerMonitor, screen, shell } = require("electron");
+const { app, BrowserWindow, Tray, Menu, ipcMain, nativeImage, powerMonitor, safeStorage, screen, shell } = require("electron");
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
 const core = require("./src/core");
+const { GoogleCalendar } = require("./src/google-calendar");
 
 // Only one copy of the app at a time; opening it again shows Settings.
 if (!app.requestSingleInstanceLock()) {
@@ -20,7 +21,7 @@ const ASSETS = path.join(__dirname, "assets");
 const PRELOAD = path.join(__dirname, "preload.js");
 const page = (name) => path.join(__dirname, "src", name);
 
-let store, license, coordinator, overlay, tray, art;
+let store, license, coordinator, overlay, tray, art, calendar;
 let settingsWin = null;
 let onboardingWin = null;
 
@@ -241,6 +242,7 @@ function publicState() {
     prefs: store.prefs,
     isPro: license.isPro,
     platform: process.platform,
+    calendar: calendar.status(),
     kinds: core.KINDS.map((k) => ({ id: k, title: core.TITLES[k], interval: core.isInterval(k), calendar: core.isCalendar(k) })),
     faces: {
       maaHappy: art.pick("maa", "happy"),
@@ -290,9 +292,35 @@ function registerIpc() {
     return true;
   });
 
+  ipcMain.handle("calendar:connect", async () => {
+    try {
+      await calendar.connect();
+      // Connecting means "yes, remind me before meetings".
+      const r = store.prefs.reminders;
+      store.setPrefs({ ...store.prefs, reminders: { ...r, meeting: { ...r.meeting, enabled: true } } });
+      return { ok: true, state: publicState() };
+    } catch (err) {
+      return { ok: false, message: err.message, state: publicState() };
+    }
+  });
+
+  ipcMain.handle("calendar:disconnect", async () => {
+    await calendar.disconnect();
+    return { ok: true, state: publicState() };
+  });
+
   ipcMain.on("overlay:button", (_e, id) => overlay.press(id));
   ipcMain.on("overlay:interactive", (_e, on) => overlay.setInteractive(Boolean(on)));
   ipcMain.on("overlay:shape", (_e, rects) => overlay.setShape(rects));
+}
+
+/** Google sign-in keys, written at build time into src/google-config.json (never committed). */
+function readGoogleConfig() {
+  try {
+    return JSON.parse(fs.readFileSync(path.join(__dirname, "src", "google-config.json"), "utf8"));
+  } catch {
+    return {};
+  }
 }
 
 // ---------- Start ----------
@@ -309,6 +337,13 @@ app.whenReady().then(() => {
   art = new core.CharacterArt([path.join(userData, "Characters"), path.join(ASSETS, "Characters")]);
   const content = new core.ContentEngine([path.join(ASSETS, "ContentPacks"), path.join(userData, "Packs")]);
   overlay = new OverlayController();
+  calendar = new GoogleCalendar({
+    dir: userData,
+    config: readGoogleConfig(),
+    safeStorage,
+    openExternal: (url) => shell.openExternal(url),
+    onChange: () => settingsWin && !settingsWin.isDestroyed() && settingsWin.webContents.send("calendar:changed"),
+  });
 
   coordinator = new core.Coordinator({
     store,
@@ -320,6 +355,7 @@ app.whenReady().then(() => {
     idleSeconds: () => powerMonitor.getSystemIdleTime(),
     openLink: (url) => shell.openExternal(url),
     onStateChange: () => buildTrayMenu(),
+    calendar,
   });
 
   tray = new Tray(trayIcon());
@@ -333,5 +369,6 @@ app.whenReady().then(() => {
   screen.on("display-metrics-changed", () => overlay.win && !overlay.win.isDestroyed() && overlay.position());
 
   coordinator.start();
+  calendar.start();
   if (!store.prefs.onboarded) openOnboarding();
 });

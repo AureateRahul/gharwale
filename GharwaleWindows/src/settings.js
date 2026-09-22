@@ -96,6 +96,59 @@ function renderReminders() {
   $("reminders").replaceChildren(...rows);
 }
 
+function renderCalendar() {
+  const box = $("calendar");
+  const cal = state.calendar;
+
+  if (!cal.configured) {
+    box.replaceChildren(el("div", { className: "row" }, el("p", { className: "muted", textContent: "Google Calendar sign-in isn't set up in this version yet." })));
+    return;
+  }
+
+  if (!cal.connected) {
+    const go = el("button", { className: "btn primary", textContent: "Connect Google Calendar" });
+    go.addEventListener("click", async () => {
+      go.disabled = true;
+      go.textContent = "Waiting for Google…";
+      toast("Finish signing in on the Google page that just opened in your browser.");
+      const r = await gw.invoke("calendar:connect");
+      state = r.state;
+      toast(r.ok ? "Google Calendar connected. Maa will remind you before meetings." : r.message);
+      render();
+    });
+    box.replaceChildren(
+      el("div", { className: "row" }, el("label", {}, "Get a heads-up before meetings", el("br"), el("small", { className: "muted", textContent: cal.error || "Sign in with Google to connect your calendar." })), go)
+    );
+    return;
+  }
+
+  const cfg = state.prefs.reminders.meeting;
+  const lead = el("select", { title: "Minutes before the meeting" });
+  for (const m of [1, 2, 3, 5, 10, 15, 30]) lead.append(el("option", { value: m, textContent: `${m} min before` }));
+  lead.value = cfg.intervalMinutes;
+  lead.disabled = !cfg.enabled;
+  lead.addEventListener("change", () => ((cfg.intervalMinutes = Number(lead.value)), save()));
+
+  const off = el("button", { className: "btn", textContent: "Disconnect" });
+  off.addEventListener("click", async () => {
+    off.disabled = true;
+    const r = await gw.invoke("calendar:disconnect");
+    state = r.state;
+    toast("Google Calendar disconnected.");
+    render();
+  });
+
+  box.replaceChildren(
+    el("div", { className: "row" }, el("label", { textContent: `Connected: ${cal.email || "Google Calendar"} ✓` }), off),
+    el(
+      "div",
+      { className: "row" },
+      el("label", { textContent: "Meeting heads-up" }),
+      el("div", { className: "controls" }, lead, switchEl(cfg.enabled, (on) => ((cfg.enabled = on), save(), renderCalendar())))
+    )
+  );
+}
+
 function renderPro() {
   const box = $("pro");
   if (state.isPro) {
@@ -161,8 +214,15 @@ function render() {
   bindSimple();
   renderFamily();
   renderReminders();
+  renderCalendar();
   renderPro();
 }
+
+// Signed out elsewhere (e.g. access removed in the Google account): refresh the section.
+gw.on("calendar:changed", async () => {
+  state = await gw.invoke("state:get");
+  renderCalendar();
+});
 
 gw.invoke("state:get").then((s) => {
   state = s;
