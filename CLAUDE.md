@@ -21,10 +21,11 @@ Guidance for Claude when working in this project.
 
 - The real Mac app is called **Gharwale**. It is Swift code, made in a separate Claude web chat, and built on the user's iMac with `./scripts/build-app.sh` → `build/Gharwale.app`.
 - Needs macOS 13 (Ventura) or later. Reads the Mac Calendar for meeting reminders.
-- The website's "Download for Mac" buttons point to `downloads/Gharwale.dmg`, made on the Mac with `UNIVERSAL=1 ./scripts/build-app.sh && ./scripts/make-dmg.sh` inside `Gharwale/`.
+- The Mac DMG is built by GitHub Actions (or on a Mac with `UNIVERSAL=1 ./scripts/build-app.sh && ./scripts/make-dmg.sh` inside `Gharwale/`).
 - App source code lives in `Gharwale/` (Swift). Don't put it on the public website server.
 - **Windows + Linux app** lives in `GharwaleWindows/` (one Electron app, JavaScript). Linux: `npm run dist:linux` (must run on Linux) → `downloads/Gharwale.AppImage` + `downloads/gharwale_amd64.deb`. Linux-only code paths are behind `isLinux` in `main.js` (window shape instead of click-through, autostart .desktop file).
-- **GitHub repo:** https://github.com/AureateRahul/gharwale (private).
+- **GitHub repo:** https://github.com/AureateRahul/gharwale (public, so visitors can download from Releases).
+- **Website download buttons** link to `https://github.com/AureateRahul/gharwale/releases/latest/download/<file>` (Gharwale.dmg, Gharwale-Setup.exe, Gharwale.AppImage, gharwale_amd64.deb). They always serve the newest release. The local `downloads/` folder is only for testing and is never uploaded.
 - **New version:** GitHub → Actions → "Build apps" → Run workflow → type version (e.g. 0.2.0). It bumps `GharwaleWindows/package.json` + `Gharwale/Support/Info.plist`, commits "Release vX" and tag on GitHub, builds Linux/Windows/Mac, publishes a Release. Empty version = test build only. Run `git pull` locally afterwards, because GitHub made a commit.
 - **Google Calendar keys:** local builds read `GharwaleWindows/src/google-config.json` (made from `.env`, both git-ignored). GitHub builds need repo secrets `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`. Never print the secret.
 - Same rules, lines and art as the Mac app; art and `core.json` are copied from `Gharwale/` by `npm run sync`.
