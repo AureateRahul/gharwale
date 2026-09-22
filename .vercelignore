@@ -1,0 +1,7 @@
+# Vercel publishes only the website. Everything else stays in GitHub only.
+/*
+!index.html
+!styles.css
+!script.js
+!privacy.html
+!images
