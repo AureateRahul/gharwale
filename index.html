@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MaaBaap — Little reminders from home</title>
+  <meta name="description" content="MaaBaap drops small, caring reminders at the top of your screen — eat, drink water, stretch, call home." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="progress" id="progress"></div>
+
+  <!-- ========== NAV ========== -->
+  <header class="nav" id="nav">
+    <a href="#" class="logo">
+      <span class="logo-mark">m</span> MaaBaap
+    </a>
+    <nav class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#pro">Pro</a>
+    </nav>
+    <a href="#download" class="btn btn-dark btn-sm">Download</a>
+  </header>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <div class="floaters" aria-hidden="true">
+      <span class="floater" style="--x:6%;--y:18%;--r:-8deg;--d:0s">Eat!</span>
+      <span class="floater" style="--x:84%;--y:14%;--r:6deg;--d:1.2s">Water</span>
+      <span class="floater" style="--x:10%;--y:68%;--r:5deg;--d:2.1s">Call home</span>
+      <span class="floater" style="--x:82%;--y:62%;--r:-6deg;--d:.6s">Sleep</span>
+      <span class="floater" style="--x:48%;--y:88%;--r:3deg;--d:1.7s">Stretch</span>
+    </div>
+    <!-- Notch with a character peeking down + speech bubble -->
+    <div class="stage" id="stage">
+      <div class="notch" id="notch">
+        <img class="avatar" id="avatar" src="images/characters/maa-neutral-1.png" alt="Maa" width="256" height="256" />
+      </div>
+      <div class="bubble" id="bubble" aria-live="polite">
+        <strong id="bubbleTitle">Beta, khana kha lo. Thanda ho raha hai.</strong>
+        <span id="bubbleSub">Your food is getting cold. Go eat.</span>
+      </div>
+    </div>
+
+    <p class="eyebrow eyebrow-wide">A little home on your screen</p>
+    <h1 class="split">Little reminders <em>from home</em>.</h1>
+    <p class="lead">
+      Caring nudges. A voice you know. Right at the top of your screen.
+    </p>
+    <div class="cta-row dl-row" id="download">
+      <div class="dl">
+        <a href="downloads/Gharwale.dmg" download class="btn btn-dark"> Download for Mac</a>
+        <small>macOS 13 Ventura or later</small>
+      </div>
+      <div class="dl">
+        <a href="downloads/Gharwale-Setup.exe" download class="btn btn-dark">⊞ Download for Windows</a>
+        <small>Windows 10 / 11 (64-bit)</small>
+      </div>
+      <div class="dl">
+        <a href="downloads/Gharwale.AppImage" download class="btn btn-dark">🐧 Download for Linux</a>
+        <small>AppImage · or <a class="alt-link" href="downloads/gharwale_amd64.deb" download>.deb for Ubuntu</a></small>
+      </div>
+    </div>
+
+    <!-- Reminder player controls -->
+    <div class="player">
+      <button class="pbtn" id="playBtn" aria-label="Pause">❚❚</button>
+      <span class="count" id="count">01 / 14</span>
+      <span class="rname" id="rName">Lunch time</span>
+      <span class="rlang" id="rLang">Hindi</span>
+      <button class="pbtn" id="nextBtn" aria-label="Next reminder">›</button>
+    </div>
+  </section>
+
+  <!-- ========== STICKER STRIP ========== -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Khana kha liya?</span><span>Paani piyo</span><span>Call Mummy</span>
+      <span>Stretch karo</span><span>So jao ab</span><span>Rest your eyes</span>
+      <span>Fruit khaya?</span><span>Papa's birthday tomorrow</span>
+      <span>Khana kha liya?</span><span>Paani piyo</span><span>Call Mummy</span>
+      <span>Stretch karo</span><span>So jao ab</span><span>Rest your eyes</span>
+      <span>Fruit khaya?</span><span>Papa's birthday tomorrow</span>
+    </div>
+  </div>
+
+  <!-- ========== FEATURES ========== -->
+  <section class="section care" id="features">
+    <div class="care-head">
+      <div>
+        <p class="eyebrow eyebrow-wide">All through your day</p>
+        <h2 class="care-title">The small things<br />a busy day forgets.</h2>
+      </div>
+      <p class="care-side">
+        Work can pause for a minute.<br />
+        Eat something warm. Drink some water.<br />
+        Hear a voice from home.
+      </p>
+    </div>
+
+    <div class="care-grid">
+      <article class="care-item">
+        <div class="care-line"><i></i></div>
+        <p class="care-label">01 / Food first</p>
+        <div class="peek"><img class="peek-face" src="images/characters/maa-happy-1.png" alt="Maa smiling" loading="lazy" /></div>
+        <h3>Khana khaya?</h3>
+        <p class="care-sub">Nudges at breakfast, lunch and dinner.</p>
+      </article>
+      <article class="care-item">
+        <div class="care-line"><i></i></div>
+        <p class="care-label">02 / Slow down</p>
+        <div class="peek"><img class="peek-face" src="images/characters/papa-stern-1.png" alt="Papa being strict" loading="lazy" /></div>
+        <h3>Stretch a little.</h3>
+        <p class="care-sub">Water, a walk and a moment to breathe.</p>
+      </article>
+      <article class="care-item">
+        <div class="care-line"><i></i></div>
+        <p class="care-label">03 / Stay close</p>
+        <div class="peek"><img class="peek-face" src="images/characters/maa-proud-1.png" alt="Maa looking proud" loading="lazy" /></div>
+        <h3>Phone karo na.</h3>
+        <p class="care-sub">A reminder to call the people who miss you.</p>
+      </article>
+    </div>
+
+    <p class="care-note">More built in: sleep-time reminders, charger alerts, a good-morning note and screen breaks.</p>
+  </section>
+
+  <!-- ========== PERSONALIZE ========== -->
+  <section class="section section-tint voices">
+    <p class="eyebrow eyebrow-wide">Sounds like home</p>
+    <h2 class="voices-title">One heart.<br />Many family voices.</h2>
+
+    <!-- Row of characters: click one to pick it -->
+    <div class="faces" id="faces">
+      <button class="face" aria-label="Maa, happy"><img src="images/characters/maa-happy-2.png" alt="" loading="lazy" /></button>
+      <button class="face" aria-label="Papa, proud"><img src="images/characters/papa-proud-1.png" alt="" loading="lazy" /></button>
+      <button class="face active" aria-label="Maa, caring"><img src="images/characters/maa-neutral-1.png" alt="" loading="lazy" /></button>
+      <button class="face" aria-label="Papa, happy"><img src="images/characters/papa-happy-1.png" alt="" loading="lazy" /></button>
+      <button class="face" aria-label="Maa, strict"><img src="images/characters/maa-stern-1.png" alt="" loading="lazy" /></button>
+    </div>
+
+    <p class="phrase" id="phrase">Did you eat something?</p>
+
+    <div class="tabs" id="tabs" role="tablist">
+      <button class="tab active" data-i="0" role="tab">English</button>
+      <button class="tab" data-i="1" role="tab">Hindi</button>
+      <button class="tab" data-i="2" role="tab">Tamil</button>
+      <button class="tab" data-i="3" role="tab">Bengali</button>
+      <button class="tab" data-i="4" role="tab">Gujarati</button>
+      <button class="tab" data-i="5" role="tab">Marathi</button>
+      <span class="tab-bar" id="tabBar"></span>
+    </div>
+
+    <p class="voices-stats">Maa &amp; Papa · 5 moods · 10 languages</p>
+    <p class="voices-note">All languages are free. Strict mode comes with Pro.</p>
+  </section>
+
+  <!-- ========== CONTROL & PRIVACY ========== -->
+  <section class="section">
+    <p class="eyebrow">You're in charge</p>
+    <h2>Caring, never nagging.</h2>
+    <div class="grid-3">
+      <article class="card card-flat">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></div>
+        <h3>Quiet hours</h3>
+        <p>No stickers during meetings, focus time or sleep. You pick the hours.</p>
+      </article>
+      <article class="card card-flat">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+        <h3>Your schedule</h3>
+        <p>Set when each reminder shows up, or let it follow your daily routine.</p>
+      </article>
+      <article class="card card-flat">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+        <h3>Stays on your device</h3>
+        <p>Your settings live on your computer only. Nothing is sent anywhere.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ========== HOW IT WORKS ========== -->
+  <section class="section section-tint" id="how">
+    <p class="eyebrow">Easy setup</p>
+    <h2>Ready in one minute.</h2>
+    <ol class="steps">
+      <li><span>1</span><h3>Pick a look</h3><p>Choose language, tone and sticker colour.</p></li>
+      <li><span>2</span><h3>Set your day</h3><p>Tell it when you eat, work and sleep.</p></li>
+      <li><span>3</span><h3>Feel looked after</h3><p>Stickers appear at the top of your screen at the right time.</p></li>
+    </ol>
+  </section>
+
+  <!-- ========== PRO ========== -->
+  <section class="section" id="pro">
+    <p class="eyebrow">MaaBaap Pro</p>
+    <h2>A little extra love.</h2>
+    <div class="pricing">
+      <div class="plan">
+        <h3>Free</h3>
+        <p class="price">₹0</p>
+        <ul>
+          <li>Meal, water &amp; break reminders</li>
+          <li>All 10 languages</li>
+          <li>Quiet hours</li>
+        </ul>
+      </div>
+      <div class="plan plan-pro">
+        <span class="badge">One-time</span>
+        <h3>Pro</h3>
+        <p class="price">₹199</p>
+        <ul>
+          <li>Write your own reminders</li>
+          <li>Calendar sync</li>
+          <li>Birthday &amp; anniversary alerts for family</li>
+          <li>Everything in Free</li>
+        </ul>
+        <a href="#download" class="btn btn-dark" id="getPro">Get Pro</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TESTIMONIALS (placeholder) ========== -->
+  <section class="section section-tint">
+    <p class="eyebrow">Kind words</p>
+    <h2>What people say</h2>
+    <p class="tiny">Placeholder cards — swap in real user reviews before launch.</p>
+    <div class="carousel" id="carousel">
+      <div class="quote">“Sample review text goes here.” <span>Name, @handle</span></div>
+      <div class="quote">“Sample review text goes here.” <span>Name, @handle</span></div>
+      <div class="quote">“Sample review text goes here.” <span>Name, @handle</span></div>
+      <div class="quote">“Sample review text goes here.” <span>Name, @handle</span></div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER CTA ========== -->
+  <section class="final">
+    <h2>Let someone care for you today.</h2>
+    <div class="cta-row">
+      <a href="downloads/Gharwale.dmg" download class="btn btn-light"> Download for Mac</a>
+      <a href="downloads/Gharwale-Setup.exe" download class="btn btn-outline">⊞ Download for Windows</a>
+      <a href="downloads/Gharwale.AppImage" download class="btn btn-outline">🐧 Download for Linux</a>
+    </div>
+    <p class="tiny">Pro is a one-time ₹199 — no subscription.</p>
+  </section>
+
+  <footer class="footer">
+    <span>2026 MaaBaap</span>
+    <span>Made with love for everyone living away from home.</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

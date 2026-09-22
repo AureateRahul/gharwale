@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' file: data:; style-src 'self'; script-src 'self'" />
+  <title>Welcome to Gharwale</title>
+  <link rel="stylesheet" href="ui.css" />
+</head>
+<body>
+  <main class="welcome">
+    <div class="family-tile" aria-hidden="true">
+      <img id="faceMaa" alt="" />
+      <img id="facePapa" alt="" />
+    </div>
+
+    <section class="step" id="step" aria-live="polite"></section>
+
+    <div class="footer">
+      <button class="btn" id="back">Back</button>
+      <div class="dots" id="dots" role="img" aria-label="Step 1 of 3"><i class="on"></i><i></i><i></i></div>
+      <button class="btn primary" id="next">Next</button>
+    </div>
+  </main>
+  <script src="onboarding.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' file: data:; style-src 'self'; script-src 'self'" />
+  <title>Gharwale Settings</title>
+  <link rel="stylesheet" href="ui.css" />
+</head>
+<body>
+  <main class="settings-main">
+    <h1>Settings</h1>
+    <p class="muted">Changes save by themselves.</p>
+
+    <h2>You</h2>
+    <div class="card">
+      <div class="row"><input type="text" id="nickname" placeholder="What should they call you?" maxlength="30" /></div>
+    </div>
+
+    <h2>Who's at home</h2>
+    <div class="card" id="family"></div>
+    <p class="note muted small">Dadi, Didi, Bhaiya and the rest of the family are moving in with Pro updates.</p>
+
+    <h2>Voice</h2>
+    <div class="card">
+      <div class="row"><label for="language">Language</label>
+        <select id="language"><option value="hinglish">Hinglish</option><option value="english">English</option></select></div>
+      <div class="row"><label for="tone">Tone</label>
+        <select id="tone"><option value="soft">Soft</option><option value="strict">Strict</option></select></div>
+      <div class="row"><label for="showTranslation">Show the English line underneath</label>
+        <span class="switch"><input type="checkbox" id="showTranslation" /><span></span></span></div>
+    </div>
+
+    <h2>Reminders</h2>
+    <div class="card" id="reminders"></div>
+    <p class="note muted small">Meeting reminders from your calendar are coming to Windows soon. You can already try one from the tray menu.</p>
+
+    <h2>Keeping it calm</h2>
+    <div class="card">
+      <div class="row"><label for="quietStartHour">Quiet hours start</label><select id="quietStartHour"></select></div>
+      <div class="row"><label for="quietEndHour">Quiet hours end</label><select id="quietEndHour"></select></div>
+      <div class="row"><label for="dailyCap">Daily limit (check-ins)</label><input type="number" id="dailyCap" min="1" max="40" /></div>
+      <div class="row"><label for="snoozeMinutes">Snooze length (minutes)</label><input type="number" id="snoozeMinutes" min="1" max="30" /></div>
+      <div class="row"><label for="escalationEnabled">After two snoozes, the other parent steps in</label>
+        <span class="switch"><input type="checkbox" id="escalationEnabled" /><span></span></span></div>
+      <div class="row"><label for="launchAtLogin" id="launchLabel">Start Gharwale when Windows starts</label>
+        <span class="switch"><input type="checkbox" id="launchAtLogin" /><span></span></span></div>
+    </div>
+    <p class="note muted small">Good morning and bedtime still come through quiet hours. Nobody appears while you're away from the computer.</p>
+
+    <h2>Gharwale Pro</h2>
+    <div class="card" id="pro"></div>
+    <p class="toast" id="toast" role="status"></p>
+  </main>
+  <script src="settings.js"></script>
+</body>
+</html>

@@ -1,0 +1,629 @@
+{
+  "name": "Gharwale Core",
+  "version": 1,
+  "lines": [
+    {
+      "id": "goodMorning_maa_ask_soft_01",
+      "character": "maa",
+      "reminder": "goodMorning",
+      "stage": "ask",
+      "mood": "happy",
+      "text": "Good morning {name}! Uth gaye? Pehle paani, phir phone.",
+      "translation": "Good morning {name}! Up already? Water first, then phone.",
+      "tone": "soft"
+    },
+    {
+      "id": "goodMorning_maa_ask_soft_02",
+      "character": "maa",
+      "reminder": "goodMorning",
+      "stage": "ask",
+      "mood": "happy",
+      "text": "Suprabhat {name}. Aaj ka din accha jaayega, bas nashta mat chhodna.",
+      "translation": "Good morning {name}. Today will be good, just don't skip breakfast.",
+      "tone": "soft"
+    },
+    {
+      "id": "goodMorning_maa_ask_strict_03",
+      "character": "maa",
+      "reminder": "goodMorning",
+      "stage": "ask",
+      "mood": "stern",
+      "text": "Utho {name}, suraj bhi tumse pehle kaam pe aa gaya.",
+      "translation": "Get up {name}, even the sun got to work before you.",
+      "tone": "strict"
+    },
+    {
+      "id": "goodMorning_papa_ask_soft_01",
+      "character": "papa",
+      "reminder": "goodMorning",
+      "stage": "ask",
+      "mood": "neutral",
+      "text": "Good morning {name}. Aaram se shuru karo, par shuru karo.",
+      "translation": "Good morning {name}. Start slow, but start.",
+      "tone": "soft"
+    },
+    {
+      "id": "goodMorning_papa_ask_strict_02",
+      "character": "papa",
+      "reminder": "goodMorning",
+      "stage": "ask",
+      "mood": "stern",
+      "text": "Subah ho gayi. Alarm snooze karna koi skill nahi hai.",
+      "translation": "It's morning. Snoozing the alarm is not a skill.",
+      "tone": "strict"
+    },
+    {
+      "id": "breakfast_maa_ask_soft_01",
+      "character": "maa",
+      "reminder": "breakfast",
+      "stage": "ask",
+      "mood": "happy",
+      "text": "{name}, nashta kiya? Thoda sa hi kha lo, mere liye.",
+      "translation": "{name}, had breakfast? Just a little, for me.",
+      "tone": "soft"
+    },
+    {
+      "id": "breakfast_maa_ask_soft_02",
+      "character": "maa",
+      "reminder": "breakfast",
+      "stage": "ask",
+      "mood": "neutral",
+      "text": "Khaali pet laptop mat kholo. Pehle kuch kha lo.",
+      "translation": "Don't open the laptop on an empty stomach. Eat something first.",
+      "tone": "soft"
+    },
+    {
+      "id": "breakfast_maa_ask_strict_03",
+      "character": "maa",
+      "reminder": "breakfast",
+      "stage": "ask",
+      "mood": "stern",
+      "text": "Nashta skip karna 'diet' nahi hota. Chalo, khao.",
+      "translation": "Skipping breakfast isn't a 'diet'. Go on, eat.",
+      "tone": "strict"
+    },
+    {
+      "id": "breakfast_papa_ask_soft_01",
+      "character": "papa",
+      "reminder": "breakfast",
+      "stage": "ask",
+      "mood": "neutral",
+      "text": "Nashta kar lo {name}. Din lamba hai.",
+      "translation": "Have breakfast, {name}. The day is long.",
+      "tone": "soft"
+    },
+    {
+      "id": "breakfast_papa_ask_strict_02",
+      "character": "papa",
+      "reminder": "breakfast",
+      "stage": "ask",
+      "mood": "stern",
+      "text": "Pehle nashta, phir meeting. Is ghar ka yahi niyam hai.",
+      "translation": "Breakfast first, then meetings. That's the rule in this house.",
+      "tone": "strict"
+    },
+    {
+      "id": "lunch_maa_ask_soft_01",
+      "character": "maa",
+      "reminder": "lunch",
+      "stage": "ask",
+      "mood": "happy",
+      "text": "Lunch ka time ho gaya {name}. Screen ko bhi thoda aaram do.",
+      "translation": "It's lunchtime, {name}. Give the screen a rest too.",
+      "tone": "soft"
+    },
+    {
+      "id": "lunch_maa_ask_soft_02",
+      "character": "maa",
+      "reminder": "lunch",
+      "stage": "ask",
+      "mood": "neutral",
+      "text": "Dabba khol lo {name}. Thanda ho jaayega.",
+      "translation": "Open your lunchbox, {name}. It'll go cold.",
+      "tone": "soft"
+    },
+    {
+      "id": "lunch_maa_ask_soft_03",
+      "character": "maa",
+      "reminder": "lunch",
+      "stage": "ask",
+      "mood": "worried",
+      "text": "Khaana khaya {name}?",
+      "translation": "Have you eaten, {name}?",
+      "tone": "soft",
+      "followup": {
+        "character": "papa",
+        "text": "Isne kabhi time pe khaaya hai?",
+        "translation": "Has this one ever eaten on time?",
+        "mood": "stern"
+      }
+    },
+    {
+      "id": "lunch_maa_ask_strict_04",
+      "character": "maa",
+      "reminder": "lunch",
+      "stage": "ask",
+      "mood": "stern",
+      "text": "Dopahar ho gayi aur pet khaali hai? Abhi utho.",
+      "translation": "It's afternoon and your stomach is empty? Get up now.",
+      "tone": "strict"
+    },
+    {
+      "id": "lunch_papa_ask_soft_01",
+      "character": "papa",
+      "reminder": "lunch",
+      "stage": "ask",
+      "mood": "neutral",
+      "text": "Lunch kar lo. Email kahin bhaag nahi rahe.",
+      "translation": "Have lunch. The emails aren't running away.",
+      "tone": "soft"
+    },
+    {
+      "id": "lunch_papa_ask_strict_02",
+      "character": "papa",
+      "reminder": "lunch",
+      "stage": "ask",
+      "mood": "stern",
+      "text": "Laptop ko bhook nahi lagti, tumhe lagti hai. Lunch karo.",
+      "translation": "The laptop doesn't get hungry, you do. Have lunch.",
+      "tone": "strict"
+    },
+    {
+      "id": "dinner_maa_ask_soft_01",
+      "character": "maa",
+      "reminder": "dinner",
+      "stage": "ask",
+      "mood": "happy",
+      "text": "Khaana lag gaya hai {name}. Garam garam kha lo.",
+      "translation": "Dinner's on the table, {name}. Eat it while it's hot.",
+      "tone": "soft"
+    },
+    {
+      "id": "dinner_maa_ask_strict_02",
+      "character": "maa",
+      "reminder": "dinner",
+      "stage": "ask",
+      "mood": "stern",
+      "text": "Raat ke khaane mein Maggi nahi chalegi. Dhang ka khaana khao.",
+      "translation": "Maggi doesn't count as dinner. Eat a proper meal.",
+      "tone": "strict"
+    },
+    {
+      "id": "dinner_papa_ask_soft_01",
+      "character": "papa",
+      "reminder": "dinner",
+      "stage": "ask",
+      "mood": "neutral",
+      "text": "Dinner kar lo, phir baaki kaam.",
+      "translation": "Have dinner, then the rest of the work.",
+      "tone": "soft"
+    },
+    {
+      "id": "dinner_papa_ask_strict_02",
+      "character": "papa",
+      "reminder": "dinner",
+      "stage": "ask",
+      "mood": "stern",
+      "text": "Kaam kal bhi hoga. Khaana abhi.",
+      "translation": "The work will be there tomorrow. Dinner is now.",
+      "tone": "strict"
+    },
+    {
+      "id": "water_maa_ask_soft_01",
+      "character": "maa",
+      "reminder": "water",
+      "stage": "ask",
+      "mood": "neutral",
+      "text": "Ek glass paani pi lo {name}. Bas ek.",
+      "translation": "Drink a glass of water, {name}. Just one.",
+      "tone": "soft"
+    },
+    {
+      "id": "water_maa_ask_soft_02",
+      "character": "maa",
+      "reminder": "water",
+      "stage": "ask",
+      "mood": "worried",
+      "text": "Bottle kab se waise hi bhari padi hai. Thoda piyo.",
+      "translation": "That bottle has been full for ages. Drink some.",
+      "tone": "soft",
+      "followup": {
+        "character": "papa",
+        "text": "Aur khaali bottle ki photo bhejna.",
+        "translation": "And send a photo of the empty bottle.",
+        "mood": "neutral"
+      }
+    },
+    {
+      "id": "water_maa_ask_strict_03",
+      "character": "maa",
+      "reminder": "water",
+      "stage": "ask",
+      "mood": "stern",
+      "text": "Coffee ko paani mat samjho. Glass bharo, piyo.",
+      "translation": "Coffee doesn't count as water. Fill a glass, drink it.",
+      "tone": "strict"
+    },
+    {
+      "id": "water_papa_ask_soft_01",
+      "character": "papa",
+      "reminder": "water",
+      "stage": "ask",
+      "mood": "neutral",
+      "text": "Paani piyo. Dimaag bhi tez chalega.",
+      "translation": "Drink water. Your brain will work faster too.",
+      "tone": "soft"
+    },
+    {
+      "id": "water_papa_ask_strict_02",
+      "character": "papa",
+      "reminder": "water",
+      "stage": "ask",
+      "mood": "stern",
+      "text": "Bottle sirf desk sajaane ke liye nahi hai.",
+      "translation": "The bottle isn't just desk decoration.",
+      "tone": "strict"
+    },
+    {
+      "id": "move_maa_ask_soft_01",
+      "character": "maa",
+      "reminder": "move",
+      "stage": "ask",
+      "mood": "neutral",
+      "text": "Thoda utho {name}, kamar seedhi karo, ek chakkar laga lo.",
+      "translation": "Get up a bit, {name}. Straighten your back, take a walk around.",
+      "tone": "soft"
+    },
+    {
+      "id": "move_maa_ask_strict_02",
+      "character": "maa",
+      "reminder": "move",
+      "stage": "ask",
+      "mood": "stern",
+      "text": "Kab se ek jagah baithe ho? Kursi ko bhi chhutti do.",
+      "translation": "How long have you been sitting? Give the chair a break too.",
+      "tone": "strict"
+    },
+    {
+      "id": "move_papa_ask_soft_01",
+      "character": "papa",
+      "reminder": "move",
+      "stage": "ask",
+      "mood": "neutral",
+      "text": "Paanch minute tehel lo. Kaam wahin rahega.",
+      "translation": "Walk for five minutes. The work will stay right there.",
+      "tone": "soft"
+    },
+    {
+      "id": "move_papa_ask_soft_02",
+      "character": "papa",
+      "reminder": "move",
+      "stage": "ask",
+      "mood": "happy",
+      "text": "Thoda chal lo {name}. Doctor ke paise bachenge.",
+      "translation": "Take a short walk, {name}. It saves on doctor's fees.",
+      "tone": "soft"
+    },
+    {
+      "id": "move_papa_ask_strict_03",
+      "character": "papa",
+      "reminder": "move",
+      "stage": "ask",
+      "mood": "stern",
+      "text": "Utho, stretch karo. Yeh posture dekh ke meri kamar dukh rahi hai.",
+      "translation": "Get up and stretch. Looking at that posture is hurting my back.",
+      "tone": "strict"
+    },
+    {
+      "id": "bedtime_maa_ask_soft_01",
+      "character": "maa",
+      "reminder": "bedtime",
+      "stage": "ask",
+      "mood": "neutral",
+      "text": "So jao {name}. Kal phir baat karenge.",
+      "translation": "Go to sleep, {name}. We'll talk tomorrow.",
+      "tone": "soft"
+    },
+    {
+      "id": "bedtime_maa_ask_strict_02",
+      "character": "maa",
+      "reminder": "bedtime",
+      "stage": "ask",
+      "mood": "worried",
+      "text": "Aankhein laal ho gayi hain. Laptop band, light off.",
+      "translation": "Your eyes have gone red. Laptop shut, lights off.",
+      "tone": "strict"
+    },
+    {
+      "id": "bedtime_papa_ask_soft_01",
+      "character": "papa",
+      "reminder": "bedtime",
+      "stage": "ask",
+      "mood": "neutral",
+      "text": "Bahut ho gaya aaj ke liye. Aaram karo.",
+      "translation": "That's enough for today. Get some rest.",
+      "tone": "soft"
+    },
+    {
+      "id": "bedtime_papa_ask_strict_02",
+      "character": "papa",
+      "reminder": "bedtime",
+      "stage": "ask",
+      "mood": "stern",
+      "text": "Raat ke gyarah baje koi deploy nahi karta. Band karo.",
+      "translation": "Nobody deploys at 11 at night. Shut it.",
+      "tone": "strict",
+      "followup": {
+        "character": "maa",
+        "text": "Arre, itna gussa mat karo. Par haan {name}, so jao.",
+        "translation": "Don't be so harsh. But yes, {name}, go to sleep.",
+        "mood": "worried"
+      }
+    },
+    {
+      "id": "bedtime_papa_ask_strict_03",
+      "character": "papa",
+      "reminder": "bedtime",
+      "stage": "ask",
+      "mood": "stern",
+      "text": "Bijli ka bill main bharta hoon, neend tum poori karo. So jao.",
+      "translation": "I pay the electricity bill, you catch up on sleep. Go to bed.",
+      "tone": "strict"
+    },
+    {
+      "id": "any_papa_escalate_any_01",
+      "character": "papa",
+      "reminder": "any",
+      "stage": "escalate",
+      "mood": "stern",
+      "text": "Tumhari Maa do baar bol chuki hai. Teesri baar main bol raha hoon.",
+      "translation": "Your mother has said it twice. The third time, I'm saying it."
+    },
+    {
+      "id": "breakfast_papa_escalate_any_01",
+      "character": "papa",
+      "reminder": "breakfast",
+      "stage": "escalate",
+      "mood": "stern",
+      "text": "Maa ne mujhe bheja hai. Ab bahana nahi, nashta.",
+      "translation": "Maa sent me. No more excuses, breakfast."
+    },
+    {
+      "id": "lunch_papa_escalate_any_01",
+      "character": "papa",
+      "reminder": "lunch",
+      "stage": "escalate",
+      "mood": "stern",
+      "text": "Maa ne mujhe bheja hai. Ab bahana nahi, khaana.",
+      "translation": "Maa sent me. No more excuses, eat."
+    },
+    {
+      "id": "dinner_papa_escalate_any_01",
+      "character": "papa",
+      "reminder": "dinner",
+      "stage": "escalate",
+      "mood": "stern",
+      "text": "Maa khaana garam kar kar ke thak gayi. Aa jao.",
+      "translation": "Maa is tired of reheating your dinner. Come now."
+    },
+    {
+      "id": "water_papa_escalate_any_01",
+      "character": "papa",
+      "reminder": "water",
+      "stage": "escalate",
+      "mood": "stern",
+      "text": "Paani ke liye bhi mujhe aana padega? Piyo.",
+      "translation": "Do I have to come out for water too? Drink."
+    },
+    {
+      "id": "any_maa_escalate_any_01",
+      "character": "maa",
+      "reminder": "any",
+      "stage": "escalate",
+      "mood": "worried",
+      "text": "Papa naraz ho rahe hain. Meri baat maan lo, please.",
+      "translation": "Papa is getting upset. Listen to me, please."
+    },
+    {
+      "id": "bedtime_maa_escalate_any_01",
+      "character": "maa",
+      "reminder": "bedtime",
+      "stage": "escalate",
+      "mood": "worried",
+      "text": "Papa ne do baar bola. Ab main aayi hoon. So jao {name}.",
+      "translation": "Papa said it twice. Now I've come. Go to sleep, {name}."
+    },
+    {
+      "id": "move_maa_escalate_any_01",
+      "character": "maa",
+      "reminder": "move",
+      "stage": "escalate",
+      "mood": "worried",
+      "text": "Papa ki baat nahi maani? Chalo, meri khaatir thoda ghoom lo.",
+      "translation": "Didn't listen to Papa? Walk a little, for my sake."
+    },
+    {
+      "id": "any_maa_done_any_01",
+      "character": "maa",
+      "reminder": "any",
+      "stage": "done",
+      "mood": "proud",
+      "text": "Shabaash mera bachcha.",
+      "translation": "That's my good kid."
+    },
+    {
+      "id": "any_maa_done_any_02",
+      "character": "maa",
+      "reminder": "any",
+      "stage": "done",
+      "mood": "happy",
+      "text": "Dekha, kitna accha laga? Khush raho.",
+      "translation": "See, doesn't that feel good? Stay happy."
+    },
+    {
+      "id": "lunch_maa_done_any_01",
+      "character": "maa",
+      "reminder": "lunch",
+      "stage": "done",
+      "mood": "happy",
+      "text": "Aur thoda aur le lena.",
+      "translation": "And have a little extra."
+    },
+    {
+      "id": "dinner_maa_done_any_01",
+      "character": "maa",
+      "reminder": "dinner",
+      "stage": "done",
+      "mood": "happy",
+      "text": "Aur ek roti? Bas ek.",
+      "translation": "One more roti? Just one."
+    },
+    {
+      "id": "bedtime_maa_done_any_01",
+      "character": "maa",
+      "reminder": "bedtime",
+      "stage": "done",
+      "mood": "happy",
+      "text": "Good night {name}. Meethe sapne.",
+      "translation": "Good night, {name}. Sweet dreams."
+    },
+    {
+      "id": "goodMorning_maa_done_any_01",
+      "character": "maa",
+      "reminder": "goodMorning",
+      "stage": "done",
+      "mood": "happy",
+      "text": "Accha din ho {name}.",
+      "translation": "Have a good day, {name}."
+    },
+    {
+      "id": "any_papa_done_any_01",
+      "character": "papa",
+      "reminder": "any",
+      "stage": "done",
+      "mood": "proud",
+      "text": "Hmm. Theek hai.",
+      "translation": "Hmm. Good."
+    },
+    {
+      "id": "any_papa_done_any_02",
+      "character": "papa",
+      "reminder": "any",
+      "stage": "done",
+      "mood": "happy",
+      "text": "Dekho, kitna aasaan tha.",
+      "translation": "See, that was easy."
+    },
+    {
+      "id": "any_papa_done_any_03",
+      "character": "papa",
+      "reminder": "any",
+      "stage": "done",
+      "mood": "proud",
+      "text": "Aaj toh kamaal ho gaya. Pehli baar mein maan gaye.",
+      "translation": "A miracle today. You listened the first time."
+    },
+    {
+      "id": "bedtime_papa_done_any_01",
+      "character": "papa",
+      "reminder": "bedtime",
+      "stage": "done",
+      "mood": "neutral",
+      "text": "Good night. Phone ko bhi sula do.",
+      "translation": "Good night. Put the phone to sleep too."
+    },
+    {
+      "id": "goodMorning_papa_done_any_01",
+      "character": "papa",
+      "reminder": "goodMorning",
+      "stage": "done",
+      "mood": "happy",
+      "text": "Chalo, din shuru karo.",
+      "translation": "Right, get the day started."
+    },
+    {
+      "id": "meeting_maa_ask_soft_01",
+      "character": "maa",
+      "reminder": "meeting",
+      "stage": "ask",
+      "mood": "neutral",
+      "text": "{minutes} minute mein '{meeting}' hai. Paani pi lo, baal theek kar lo.",
+      "translation": "'{meeting}' starts in {minutes} minutes. Drink some water, fix your hair.",
+      "tone": "soft"
+    },
+    {
+      "id": "meeting_maa_ask_soft_02",
+      "character": "maa",
+      "reminder": "meeting",
+      "stage": "ask",
+      "mood": "happy",
+      "text": "'{meeting}' aa rahi hai {name}. Chai le ke aaram se baitho.",
+      "translation": "'{meeting}' is coming up, {name}. Grab your chai and settle in.",
+      "tone": "soft"
+    },
+    {
+      "id": "meeting_maa_ask_strict_03",
+      "character": "maa",
+      "reminder": "meeting",
+      "stage": "ask",
+      "mood": "stern",
+      "text": "'{meeting}' {minutes} minute mein. Camera on karne se pehle shirt badal lo.",
+      "translation": "'{meeting}' in {minutes} minutes. Change your shirt before the camera goes on.",
+      "tone": "strict",
+      "followup": {
+        "character": "papa",
+        "text": "Aur peeche ka bistar bhi theek kar lo.",
+        "translation": "And fix the bed behind you too.",
+        "mood": "stern"
+      }
+    },
+    {
+      "id": "meeting_papa_ask_soft_01",
+      "character": "papa",
+      "reminder": "meeting",
+      "stage": "ask",
+      "mood": "neutral",
+      "text": "'{meeting}' {minutes} minute mein hai. Notes ready rakho.",
+      "translation": "'{meeting}' is in {minutes} minutes. Keep your notes ready.",
+      "tone": "soft"
+    },
+    {
+      "id": "meeting_papa_ask_strict_02",
+      "character": "papa",
+      "reminder": "meeting",
+      "stage": "ask",
+      "mood": "stern",
+      "text": "{minutes} minute mein '{meeting}'. Late aana hamare khandaan mein nahi hota.",
+      "translation": "'{meeting}' in {minutes} minutes. Nobody in this family is late.",
+      "tone": "strict"
+    },
+    {
+      "id": "meeting_papa_ask_strict_03",
+      "character": "papa",
+      "reminder": "meeting",
+      "stage": "ask",
+      "mood": "stern",
+      "text": "'{meeting}' shuru hone wali hai. Mute button abhi dhoondh lo, baad mein nahi.",
+      "translation": "'{meeting}' is about to start. Find the mute button now, not later.",
+      "tone": "strict"
+    },
+    {
+      "id": "meeting_maa_done_any_01",
+      "character": "maa",
+      "reminder": "meeting",
+      "stage": "done",
+      "mood": "proud",
+      "text": "All the best {name}. Accha bolna.",
+      "translation": "All the best, {name}. Speak well."
+    },
+    {
+      "id": "meeting_papa_done_any_01",
+      "character": "papa",
+      "reminder": "meeting",
+      "stage": "done",
+      "mood": "proud",
+      "text": "Jao, sabko impress karo.",
+      "translation": "Go and impress everyone."
+    }
+  ]
+}

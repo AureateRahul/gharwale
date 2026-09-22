@@ -1,0 +1,14 @@
+# Big build output — GitHub builds these itself
+downloads/
+GharwaleWindows/node_modules/
+GharwaleWindows/dist/
+GharwaleWindows/assets/
+GharwaleWindows/build/icon.png
+Gharwale/build/
+Gharwale/.build/
+Gharwale/.swiftpm/
+
+# System files
+.DS_Store
+Thumbs.db
+*.log

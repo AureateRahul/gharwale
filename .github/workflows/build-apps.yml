@@ -1,0 +1,94 @@
+# Builds Gharwale for Linux, Windows and Mac on GitHub's computers.
+#
+# Run it by hand: GitHub → Actions → "Build apps" → Run workflow
+#   → the files appear under that run's "Artifacts".
+# Release it: push a tag like v0.1.0 (git tag v0.1.0 && git push --tags)
+#   → the files are also attached to a GitHub Release, with fixed names so the website can link to
+#     https://github.com/<you>/<repo>/releases/latest/download/Gharwale-Setup.exe (and the others).
+name: Build apps
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  linux:
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: GharwaleWindows
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: GharwaleWindows/package-lock.json
+      - run: npm ci
+      - run: npm run sync && npx electron-builder --linux AppImage deb --x64 --publish never
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux
+          path: |
+            GharwaleWindows/dist/*.AppImage
+            GharwaleWindows/dist/*.deb
+
+  windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: GharwaleWindows
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: GharwaleWindows/package-lock.json
+      - run: npm ci
+      - run: npm run sync && npx electron-builder --win nsis --x64 --publish never
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows
+          path: GharwaleWindows/dist/*.exe
+
+  mac:
+    runs-on: macos-14
+    defaults:
+      run:
+        working-directory: Gharwale
+    steps:
+      - uses: actions/checkout@v4
+      - run: chmod +x scripts/*.sh
+      # Builds for Apple Silicon + Intel, then packs the drag-to-Applications DMG (not signed yet).
+      - run: UNIVERSAL=1 ./scripts/build-app.sh && ./scripts/make-dmg.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mac
+          path: Gharwale/build/Gharwale.dmg
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [linux, windows, mac]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: out
+          merge-multiple: true
+      # Fixed names, so the website's links never change between versions.
+      - name: Rename files
+        run: |
+          cd out
+          mv Gharwale-Setup-*.exe   Gharwale-Setup.exe
+          mv Gharwale-*.AppImage    Gharwale.AppImage
+          mv gharwale_*_amd64.deb   gharwale_amd64.deb
+          ls -la
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: out/*
+          generate_release_notes: true

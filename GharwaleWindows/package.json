@@ -1,0 +1,76 @@
+{
+  "name": "gharwale",
+  "productName": "Gharwale",
+  "version": "0.1.0",
+  "description": "Maa and Papa live at the top of your screen and remind you to eat, drink water, move and sleep.",
+  "main": "main.js",
+  "author": {
+    "name": "Gharwale",
+    "email": "change-me@example.com"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "sync": "node scripts/sync-assets.js",
+    "start": "npm run sync && electron .",
+    "dist": "npm run sync && electron-builder --win nsis --x64 && node scripts/copy-to-website.js",
+    "dist:linux": "npm run sync && electron-builder --linux AppImage deb --x64 && node scripts/copy-to-website.js"
+  },
+  "devDependencies": {
+    "electron": "^33.4.11",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "app.gharwale.windows",
+    "productName": "Gharwale",
+    "copyright": "Made with love at home.",
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "runAfterFinish": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Gharwale",
+      "artifactName": "Gharwale-Setup-${version}.exe",
+      "deleteAppDataOnUninstall": false
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "build/icon.png",
+      "category": "Utility",
+      "synopsis": "Maa and Papa remind you to eat, drink water, move and sleep.",
+      "maintainer": "Gharwale <change-me@example.com>",
+      "executableName": "gharwale",
+      "desktop": {
+        "Name": "Gharwale",
+        "Comment": "Maa and Papa remind you to eat, drink water, move and sleep.",
+        "StartupWMClass": "Gharwale"
+      }
+    },
+    "appImage": {
+      "artifactName": "Gharwale-${version}.AppImage"
+    },
+    "deb": {
+      "artifactName": "gharwale_${version}_amd64.deb"
+    }
+  },
+  "homepage": "https://gharwale.app"
+}

@@ -1,0 +1,5 @@
+# Build scripts must keep Mac/Linux line endings, or they fail on GitHub
+*.sh text eol=lf
+*.yml text eol=lf
+*.entitlements text eol=lf
+*.plist text eol=lf
