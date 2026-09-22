@@ -15,3 +15,8 @@ Thumbs.db
 
 # Google sign-in keys (GitHub adds them at build time from repository secrets)
 GharwaleWindows/src/google-config.json
+
+# Private settings — never upload
+.env
+.env.*
+site-upload/

@@ -1,14 +1,23 @@
 # Builds Gharwale for Linux, Windows and Mac on GitHub's computers.
 #
-# Run it by hand: GitHub → Actions → "Build apps" → Run workflow
-#   → the files appear under that run's "Artifacts".
-# Release it: push a tag like v0.1.0 (git tag v0.1.0 && git push --tags)
-#   → the files are also attached to a GitHub Release, with fixed names so the website can link to
-#     https://github.com/<you>/<repo>/releases/latest/download/Gharwale-Setup.exe (and the others).
+# NEW VERSION (one click):
+#   GitHub → Actions → "Build apps" → Run workflow → type a version like 0.2.0 → Run.
+#   It sets that version in both apps, saves the change with a tag (v0.2.0),
+#   builds all three apps and publishes them under Releases.
+#
+# TEST BUILD (no new version):
+#   Same, but leave the version box empty → files appear under the run's "Artifacts".
+#
+# Pushing a tag yourself (git tag v0.2.0 && git push --tags) also builds and releases.
 name: Build apps
 
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: "New version, like 0.2.0 (leave empty for a test build)"
+        required: false
+        type: string
   push:
     tags: ["v*"]
 
@@ -16,13 +25,57 @@ permissions:
   contents: write
 
 jobs:
+  # Only for "Run workflow" with a version: set the version everywhere, commit, tag.
+  prepare:
+    if: github.event_name == 'workflow_dispatch' && inputs.version != ''
+    runs-on: ubuntu-latest
+    outputs:
+      ref: ${{ steps.tag.outputs.ref }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check the version number
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          VERSION="${VERSION#v}"
+          if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::Version must look like 0.2.0 (got '$VERSION')"; exit 1
+          fi
+          if git rev-parse "v$VERSION" >/dev/null 2>&1; then
+            echo "::error::Version v$VERSION already exists. Pick a higher number."; exit 1
+          fi
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+      - name: Set the version in both apps
+        run: |
+          # Windows + Linux app
+          cd GharwaleWindows && npm version "$VERSION" --no-git-tag-version --allow-same-version && cd ..
+          # Mac app: shown version + an ever-increasing build number
+          sed -i -E "/<key>CFBundleShortVersionString<\/key>/{n;s|<string>[^<]*</string>|<string>$VERSION</string>|}" Gharwale/Support/Info.plist
+          sed -i -E "/<key>CFBundleVersion<\/key>/{n;s|<string>[^<]*</string>|<string>${{ github.run_number }}</string>|}" Gharwale/Support/Info.plist
+          grep -A1 -E "CFBundle(ShortVersionString|Version)<" Gharwale/Support/Info.plist
+      - name: Save and tag
+        id: tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Release v$VERSION"
+          git tag -a "v$VERSION" -m "Gharwale $VERSION"
+          git push origin HEAD "v$VERSION"
+          echo "ref=v$VERSION" >> "$GITHUB_OUTPUT"
+
   linux:
+    needs: prepare
+    if: ${{ !cancelled() && needs.prepare.result != 'failure' }}
     runs-on: ubuntu-22.04
     defaults:
       run:
         working-directory: GharwaleWindows
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.prepare.outputs.ref || github.ref }}
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -34,7 +87,9 @@ jobs:
         env:
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-        run: node -e "require('fs').writeFileSync('src/google-config.json', JSON.stringify({clientId: process.env.GOOGLE_CLIENT_ID || '', clientSecret: process.env.GOOGLE_CLIENT_SECRET || ''}))"
+        run: |
+          [ -z "$GOOGLE_CLIENT_ID" ] && echo "::warning::GOOGLE_CLIENT_ID secret missing: Google Calendar sign-in will be off in this build."
+          node -e "require('fs').writeFileSync('src/google-config.json', JSON.stringify({clientId: process.env.GOOGLE_CLIENT_ID || '', clientSecret: process.env.GOOGLE_CLIENT_SECRET || ''}))"
       - run: npm run sync && npx electron-builder --linux AppImage deb --x64 --publish never
       - uses: actions/upload-artifact@v4
         with:
@@ -44,12 +99,16 @@ jobs:
             GharwaleWindows/dist/*.deb
 
   windows:
+    needs: prepare
+    if: ${{ !cancelled() && needs.prepare.result != 'failure' }}
     runs-on: windows-latest
     defaults:
       run:
         working-directory: GharwaleWindows
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.prepare.outputs.ref || github.ref }}
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -61,7 +120,9 @@ jobs:
         env:
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-        run: node -e "require('fs').writeFileSync('src/google-config.json', JSON.stringify({clientId: process.env.GOOGLE_CLIENT_ID || '', clientSecret: process.env.GOOGLE_CLIENT_SECRET || ''}))"
+        run: |
+          [ -z "$GOOGLE_CLIENT_ID" ] && echo "::warning::GOOGLE_CLIENT_ID secret missing: Google Calendar sign-in will be off in this build."
+          node -e "require('fs').writeFileSync('src/google-config.json', JSON.stringify({clientId: process.env.GOOGLE_CLIENT_ID || '', clientSecret: process.env.GOOGLE_CLIENT_SECRET || ''}))"
       - run: npm run sync && npx electron-builder --win nsis --x64 --publish never
       - uses: actions/upload-artifact@v4
         with:
@@ -69,12 +130,16 @@ jobs:
           path: GharwaleWindows/dist/*.exe
 
   mac:
+    needs: prepare
+    if: ${{ !cancelled() && needs.prepare.result != 'failure' }}
     runs-on: macos-14
     defaults:
       run:
         working-directory: Gharwale
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.prepare.outputs.ref || github.ref }}
       - run: chmod +x scripts/*.sh
       # Builds for Apple Silicon + Intel, then packs the drag-to-Applications DMG (not signed yet).
       - run: UNIVERSAL=1 ./scripts/build-app.sh && ./scripts/make-dmg.sh
@@ -83,16 +148,17 @@ jobs:
           name: mac
           path: Gharwale/build/Gharwale.dmg
 
+  # Publishes a Release for a new version (not for test builds).
   release:
-    if: startsWith(github.ref, 'refs/tags/v')
-    needs: [linux, windows, mac]
+    needs: [prepare, linux, windows, mac]
+    if: ${{ !cancelled() && needs.linux.result == 'success' && needs.windows.result == 'success' && needs.mac.result == 'success' && (needs.prepare.outputs.ref != '' || startsWith(github.ref, 'refs/tags/v')) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
         with:
           path: out
           merge-multiple: true
-      # Fixed names, so the website's links never change between versions.
+      # Fixed names, so download links never change between versions.
       - name: Rename files
         run: |
           cd out
@@ -102,5 +168,7 @@ jobs:
           ls -la
       - uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ needs.prepare.outputs.ref || github.ref_name }}
+          name: Gharwale ${{ needs.prepare.outputs.ref || github.ref_name }}
           files: out/*
           generate_release_notes: true
