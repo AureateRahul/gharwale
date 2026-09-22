@@ -271,3 +271,11 @@ function confetti(x, y) {
 document.getElementById("getPro").addEventListener("click", (e) => {
   if (!reduceMotion) confetti(e.clientX, e.clientY);
 });
+
+// Count download clicks in Vercel Analytics (one event per button click)
+document.querySelectorAll('a[href*="/releases/latest/download/"]').forEach((link) => {
+  link.addEventListener("click", () => {
+    const file = link.getAttribute("href").split("/").pop();
+    window.va?.("event", { name: "Download", data: { file } });
+  });
+});
