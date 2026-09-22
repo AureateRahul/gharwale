@@ -104,6 +104,7 @@ a { color: inherit; text-decoration: none; }
 .btn-outline { color: var(--neutral); border-color: rgba(255,255,255,.3); }
 .btn-outline:hover { border-color: var(--neutral); }
 .btn:active { opacity: .85; }
+.os-icon { width: 18px; height: 18px; flex-shrink: 0; margin-top: -2px; }
 /* Windows app not ready yet */
 .btn-soon { opacity: .4; cursor: not-allowed; }
 .btn-soon:hover { background: var(--primary); }
